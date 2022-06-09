@@ -32,6 +32,13 @@ void main() {
       expect(range.hasMatch("4"), false);
     });
 
+    test("Matches five or more digits", () {
+      RegExp range = RegExp(r'\d{5,}');
+
+      expect(range.hasMatch("4789"), false);
+      expect(range.hasMatch("24789"), true);
+    });
+
     test(
         "Matches four alphanumeric characters, e.g 'look', 'ball', 'boy1', '2002'",
         () {

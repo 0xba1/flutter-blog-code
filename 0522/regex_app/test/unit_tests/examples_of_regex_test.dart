@@ -30,5 +30,43 @@ void main() {
         expect(isValidEmail(email), true);
       }
     });
+
+    test('Validates email string', () {
+      bool isPasswordValid(String password) {
+        final containsUpperCase = RegExp(r'[A-Z]').hasMatch(password);
+        final containsLowerCase = RegExp(r'[a-z]').hasMatch(password);
+        final containsNumber = RegExp(r'\d').hasMatch(password);
+        final containsSymbols = RegExp(r'[`~!@#$%\^&*\(\)_+\\\-={}\[\]\/.,<>;]')
+            .hasMatch(password); // This may not be necessary
+        final hasManyCharacters = RegExp(r'.{8,128}', dotAll: true)
+            .hasMatch(password); // This is variable
+
+        return containsUpperCase &&
+            containsLowerCase &&
+            containsNumber &&
+            containsSymbols &&
+            hasManyCharacters;
+      }
+
+      final goodPasswords = [
+        '1ntToBe_100',
+        'gooDy_Boy1',
+        'Maximus@1',
+      ];
+
+      for (String password in goodPasswords) {
+        expect(isPasswordValid(password), true);
+      }
+
+      final weakPasswords = [
+        'password',
+        'admin1',
+        'goodBoy99',
+      ];
+
+      for (String password in weakPasswords) {
+        expect(isPasswordValid(password), false);
+      }
+    });
   });
 }
